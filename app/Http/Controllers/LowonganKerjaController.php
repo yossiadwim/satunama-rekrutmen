@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Departemen;
 use App\Models\DokumenPelamar;
+use App\Models\DokumenPelamarLowongan;
 use App\Models\Lowongan;
+use App\Models\PelamarLowongan;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class LowonganKerjaController extends Controller
 {
@@ -87,24 +91,44 @@ class LowonganKerjaController extends Controller
         ]);
     }
 
-    public function upload(Request $request)
+    public function upload(Request $request, Lowongan $lowongan)
     {
-        dd($request);
         $request->validate([
-            'id_pelamar' => 'required',
-            'surat_lamaran' => 'mimes:pdf|max:2048'
+            'dokumen' => 'required',
+            'dokumen.*' => 'required|mimes:png,jpg,pdf,docx,doc',
         ]);
 
-
-        $file = $request->file('surat_lamaran');
-        $path = $file->getRealPath();
-        $nama_file = $file->getClientOriginalName();
-
-        DokumenPelamar::create([
-            'nama' => $nama_file,
-            'dokumen' => $path,
+        $pelamar_lowongan = PelamarLowongan::create([
+            'id_pelamar' => $request->input('id_pelamar'),
+            'id_lowongan' => $lowongan->id,
+            'tanggal_melamar' => Carbon::now()
         ]);
 
-        return redirect('/lowongan-kerja')->with('success add document', 'Dokumen sudah dikirim');
+        $user = User::where('id', auth()->user()->id)->get();
+        $user_slug = $user->pluck('slug');
+        $directory = 'document/' . $user_slug[0];
+        Storage::makeDirectory($directory);
+
+        if ($request->dokumen) {
+            foreach ($request->dokumen as $file) {
+                $nama_file = $file->getClientOriginalName();
+                $path = Storage::putFileAs($directory, $file, $nama_file);
+
+                $dokumen_pelamar = DokumenPelamar::create([
+                    'nama' => $nama_file,
+                    'dokumen' => $path
+                ]);
+
+                DokumenPelamarLowongan::create([
+                    'id_dokumen' => $dokumen_pelamar->id,
+                    'id_pelamar_lowongan' => $pelamar_lowongan->id_pelamar_lowongan
+                ]);
+            }
+        }
+
+        return back()->with('success','Dokumen berhasil diunggah');
+
+
+        
     }
 }

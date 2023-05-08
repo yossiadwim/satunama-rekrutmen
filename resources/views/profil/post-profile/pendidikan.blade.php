@@ -29,7 +29,7 @@
                                     <div class="col-md-6">
                                         <label for="jenjangPendidikan">Pilih Jenjang Pendidikan</label>
                                         <select class="form-select" aria-label="Default select example"
-                                            id="jenjangPendidikan" name="jenjang_pendidikan">
+                                            id="jenjangPendidikan" name="jenjang_pendidikan" onchange="click()">
                                             <option selected disabled>Pilih Jenjang Pendidikan</option>
                                             <option value="SD">SD</option>
                                             <option value="SMP">SMP</option>
@@ -42,6 +42,12 @@
                                             <option value="S3">S3</option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="form-floating mb-4 mt-4 col-6">
+                                    <input type="text" class="form-control" id="nama_institusi" name="nama_institusi"
+                                        placeholder="nama_institusi">
+
+                                    <label for="nama_institusi">Nama Sekolah/Institusi/Universitas</label>
                                 </div>
 
                                 <div class="form-floating mb-4 mt-4 col-6">
@@ -64,15 +70,6 @@
 
                                     <label for="id_pelamar">id_pelamar</label>
                                 </div>
-
-
-
-                                {{-- <div class="col-md-6">
-                                <div class="mb-3 mt-4">
-                                    <label for="formFileMultiple" class="form-label">Masukkan lampiran</label>
-                                    <input class="form-control" type="file" id="formFileMultiple" multiple>
-                                </div>
-                            </div> --}}
 
                             </div>
                             <div class="modal-footer">
@@ -126,6 +123,13 @@
                                             <option value="S3">S3</option>
                                         </select>
                                     </div>
+                                </div>
+
+                                <div class="form-floating mb-4 mt-4 col-6">
+                                    <input type="text" class="form-control" id="nama_institusi" name="nama_institusi"
+                                        placeholder="nama_institusi">
+
+                                    <label for="nama_institusi">Nama Sekolah/Institusi/Universitas</label>
                                 </div>
 
                                 <div class="form-floating mb-4 mt-4 col-6">

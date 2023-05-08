@@ -43,7 +43,8 @@ class PengalamanKerjaController extends Controller
                 'id_pelamar' => 'required',
             ]
         );
-        PengalamanKerja::create($validatedData);
+    PengalamanKerja::create($validatedData);
+   
         return redirect('/profil-kandidat/users/' . $user_slug[0])->with('success add work experience', 'Berhasil menambah pengalaman kerja');
     }
 

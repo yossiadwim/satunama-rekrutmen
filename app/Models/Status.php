@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pendidikan extends Model
+class Status extends Model
 {
     use HasFactory;
-
     protected $guarded = ['id'];
-    protected $table = 'pendidikan_karyawan';
+    protected $table = 'status';
     public $timestamps = false;
-    protected $primaryKey = 'id_pendidikan';
+    protected $primaryKey = 'id_status';
 
-    public function pelamar(){
-        return $this->belongsTo(Pelamar::class,'id_pelamar','id');
+    public function statusLamaran(){
+        return $this->hasMany(StatusLamaran::class,'id_status','id');
     }
 }

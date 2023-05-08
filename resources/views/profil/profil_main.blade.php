@@ -219,41 +219,30 @@
 
     }
 
-    // function clearInput() {
-    //     const editorElement = document.querySelector("trix-editor");
 
-    //     // Set the editor's HTML content to an empty string
-    //     editorElement.editor.loadHTML("");
-
-    //     // Clear the editor's input value
-    //     editorElement.editor.setSelectedRange([0, editorElement.editor.getDocument().getLength()]);
-    //     editorElement.editor.deleteInDirection("backward");
-    // }
 
     function limitYear() {
         var tahun = document.getElementById("tahunBerakhir").value
     }
 
 
-    var inputPosisi = document.getElementById("posisi");
-    var option1 = document.getElementById("konfirmasiYa");
-    var option2 = document.getElementById("konfirmasiTidak");
+    // var inputPosisi = document.getElementById("posisi");
+    // var option1 = document.getElementById("konfirmasiYa");
+    // var option2 = document.getElementById("konfirmasiTidak");
 
-    option1.addEventListener("change", function() {
-        if (option1.checked) {
-            inputPosisi.style.display = "block";
-        }
+    // option1.addEventListener("change", function() {
+    //     if (option1.checked) {
+    //         inputPosisi.style.display = "block";
+    //     }
 
-    });
+    // });
 
-    option2.addEventListener("change", function() {
-        if (option2.checked) {
-            inputPosisi.style.display = "none";
-        }
+    // option2.addEventListener("change", function() {
+    //     if (option2.checked) {
+    //         inputPosisi.style.display = "none";
+    //     }
 
-    });
-
-
+    // });
 
 
     var confirm = document.getElementById("konfirmasi")
@@ -276,40 +265,46 @@
         }
     })
 
-    $('#provinsi').on('change', function(e) {
-        console.log(this.value);
-        e.preventDefault();
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
-            },
-            type: 'GET',
-            url: "{{ url('/profil/fetch_kabupaten') }}",
-            data: {
-                id_provinsi: this.value
-            },
-            dataType: 'json',
-            success: function(data) {
-                $('#kabupaten').html("");
-
-                data.forEach(function(kabupaten) {
-
-
-                    // $('#kabupaten').html('<option value"='+kabupaten.id_kabupaten+'">'+kabupaten.nama_kabupaten+'</option>')
-
-                    $('#kabupaten').append($('<option>', {
-                        class: 'kabupaten-list',
-                        value: kabupaten.id_kabupaten,
-                        text: kabupaten.nama_kabupaten
-                    }));
-
-                })
-
-            },
-            error: function(xhr, status, error) {
-                console.log('eror');
-            }
-        });
-
+    var jenjang_pendidikan = document.getElementById('jenjangPendidikan')
+    jenjang_pendidikan.addEventListener("click", function(){
+        console.log(jenjang_pendidikan.checked)
+        
     })
+
+    // $('#provinsi').on('change', function(e) {
+    //     console.log(this.value);
+    //     e.preventDefault();
+    //     $.ajax({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+    //         },
+    //         type: 'GET',
+    //         url: "{{ url('/profil/fetch_kabupaten') }}",
+    //         data: {
+    //             id_provinsi: this.value
+    //         },
+    //         dataType: 'json',
+    //         success: function(data) {
+    //             $('#kabupaten').html("");
+
+    //             data.forEach(function(kabupaten) {
+
+
+    //                 // $('#kabupaten').html('<option value"='+kabupaten.id_kabupaten+'">'+kabupaten.nama_kabupaten+'</option>')
+
+    //                 $('#kabupaten').append($('<option>', {
+    //                     class: 'kabupaten-list',
+    //                     value: kabupaten.id_kabupaten,
+    //                     text: kabupaten.nama_kabupaten
+    //                 }));
+
+    //             })
+
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.log('eror');
+    //         }
+    //     });
+
+    
 </script>

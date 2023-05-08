@@ -34,11 +34,11 @@
                     </div>
                 @endif
 
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     @foreach ($errors->all() as $error)
                         <div>{{ $error }}</div>
                     @endforeach
-                @endif
+                @endif --}}
 
                 <main class="form-signin w-100 m-auto">
                     <h1 class="mb-3 fw-bold text-center">Login</h1>

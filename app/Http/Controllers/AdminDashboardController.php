@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departemen;
+use App\Models\User;
 use App\Models\Lowongan;
+use App\Models\Pelamar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
-
-
-
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class AdminDashboardController extends Controller
 {
@@ -18,19 +19,19 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.admin_dashboard',[
+        return view('dashboard.admin_dashboard', [
 
             'jobsOpen' => Lowongan::join('departemen', 'lowongan.id_departemen', '=', 'departemen.id_departemen')
                 ->select(DB::raw('lowongan.id as id_lowongan, lowongan.id_departemen, departemen.nama_departemen, nama_lowongan as nama_lowongan, slug, tipe_lowongan, deskripsi, lowongan.created_at, lowongan.updated_at'))
                 ->where('closed', '=', 'false')
-                ->groupBy('departemen.nama_departemen','lowongan.id')
+                ->groupBy('departemen.nama_departemen', 'lowongan.id')
                 ->get()
                 ->sortDesc(),
 
             'jobsClose' => Lowongan::join('departemen', 'lowongan.id_departemen', '=', 'departemen.id_departemen')
                 ->select(DB::raw('lowongan.id as job_id, lowongan.id_departemen, departemen.nama_departemen, nama_lowongan, slug, tipe_lowongan, deskripsi, lowongan.created_at, lowongan.updated_at'))
                 ->where('closed', '=', 'true')
-                ->groupBy('departemen.nama_departemen','lowongan.id')
+                ->groupBy('departemen.nama_departemen', 'lowongan.id')
                 ->get()
                 ->sortDesc(),
         ]);
@@ -41,7 +42,7 @@ class AdminDashboardController extends Controller
      */
     public function create()
     {
-        return view('crud_lowongan.create_lowongan',[
+        return view('crud_lowongan.create_lowongan', [
             'departemen' => Departemen::all(),
         ]);
     }
@@ -70,10 +71,13 @@ class AdminDashboardController extends Controller
      */
     public function show(Lowongan $lowongan)
     {
-        return view('dashboard.kelola_kandidat',[
-            'jobs' => $lowongan
+
+
+        return view('dashboard.kelola_kandidat', [
+            'lowongan' => $lowongan,
+            'datas' =>  $lowongan->pelamarLowongan->load('pelamar.user','pelamar.pendidikan','pelamar.pengalamanKerja','dokumenPelamarLowongan.dokumenPelamar', 'statusLamaran.status')
         ]);
-            
+
     }
 
     /**
@@ -81,8 +85,8 @@ class AdminDashboardController extends Controller
      */
     public function edit(Lowongan $lowongan)
     {
-       
-        return view('crud_lowongan.edit_lowongan',[
+
+        return view('crud_lowongan.edit_lowongan', [
             'lowongan' => $lowongan,
             'departemen' => Departemen::all()
         ]);
@@ -115,12 +119,11 @@ class AdminDashboardController extends Controller
      */
     public function destroy(Lowongan $lowongan)
     {
-        
     }
 
     public function checkSlug(Request $request)
     {
-        
+
         $slug = SlugService::createSlug(Lowongan::class, 'slug', $request->nama_lowongan);
 
         return response()->json(['slug' => $slug]);
@@ -139,6 +142,8 @@ class AdminDashboardController extends Controller
 
         return redirect('/admin-dashboard/lowongan')->with('success closed', 'Lowongan Berhasil Ditutup');
     }
-    
 
+    public function chengePosition(Request $request){
+        
+    }
 }

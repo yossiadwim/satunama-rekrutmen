@@ -12,6 +12,10 @@ class Lowongan extends Model
 
     protected $guarded = ['id'];
     public $table = 'lowongan';
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+      ];
 
     public function departemen()
     {
@@ -30,5 +34,10 @@ class Lowongan extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function pelamarLowongan(){
+        return $this->hasMany(PelamarLowongan::class,'id_lowongan','id');
+
     }
 }

@@ -47,17 +47,28 @@ class RegisterController extends Controller
 
             // User::create($validated_data_pelamar);
             // $request->session()->flash('sukses', 'Berhasil Registrasi');
-            
+
         } else {
-            // Pelamar::create($validated_data_pelamar);
-            $pelamar_id = DB::table('pelamar')->insertGetId([
-                'nama_pelamar' => $validated_data_pelamar['nama_pelamar'],
-                'email' => $validated_data_pelamar['email']
-            ]);
 
-            $validated_data_user['id_pelamar'] = $pelamar_id;
+            // $pelamar_id = DB::table('pelamar')->insertGetId([
+            //     'nama_pelamar' => $validated_data_pelamar['nama_pelamar'],
+            //     'email' => $validated_data_pelamar['email']
+            // ]);
 
-            $user_id = DB::table('users')->insertGetId([
+            // $user_id = DB::table('users')->insertGetId([
+            //     'username' => $validated_data_user['username'],
+            //     'slug' => $validated_data_user['slug'],
+            //     'email' => $validated_data_user['email'],
+            //     'password' => $validated_data_user['password'],
+            //     'id_pelamar' => $validated_data_user['id_pelamar'],
+            // ]);
+
+            $pelamar = Pelamar::create($validated_data_pelamar);
+
+            $validated_data_user['id_pelamar'] = $pelamar->id;
+
+
+            $user = User::create([
                 'username' => $validated_data_user['username'],
                 'slug' => $validated_data_user['slug'],
                 'email' => $validated_data_user['email'],
@@ -66,14 +77,12 @@ class RegisterController extends Controller
             ]);
 
             UserRole::create([
-                'id_user' => $user_id,
+                'id_user' => $user->id,
                 'id_role' => 2
             ]);
 
             $request->session()->flash('sukses', 'Registrasi Berhasil');
         }
-
-
 
         return redirect('/login');
     }

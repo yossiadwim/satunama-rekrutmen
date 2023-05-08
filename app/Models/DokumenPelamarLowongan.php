@@ -10,9 +10,10 @@ class DokumenPelamarLowongan extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $table = 'dokumen_pelamar_lowongan';
+   
 
     public function dokumenPelamar(){
-        return $this->belongsTo(DokumenPelamar::class);
+        return $this->belongsTo(DokumenPelamar::class,'id_dokumen','id');
     
     }
 

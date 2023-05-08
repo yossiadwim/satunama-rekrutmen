@@ -19,6 +19,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, Sluggable;
 
     protected $table = 'users';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -27,8 +28,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
+        'id_pelamar'
     ];
 
     /**
@@ -66,6 +69,10 @@ class User extends Authenticatable
 
     public function pelamar(){
         return $this->belongsTo(Pelamar::class,'id_pelamar','id');
+    }
+    
+    public function karyawan(){
+        return $this->belongsTo(Karyawan::class,'id_karyawan','id_karyawan');
     }
 
     public function getRouteKeyName(): string

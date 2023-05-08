@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -19,10 +18,31 @@
 
     @include('partials.navbar')
 
+    @if ($errors->any())
+        <div class="container justify-content-center col-8">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center">
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+
+    @if (session()->has('success'))
+        <div class="container justify-content-center col-8">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+
     <div class="container">
         <h2 class="mt-5 fw-bold">{{ $lowongan->nama_lowongan }}</h2>
         <h5 class="mt-4">YAYASAN SATUNAMA</h5>
-        <h6 class="mt-4"><i class="bi bi-building"></i>Departemen {{ $lowongan->departemen->nama_departemen }}</h6>
+        <h6 class="mt-4"><i class="bi bi-building"></i>Departemen {{ $lowongan->departemen->nama_departemen }}
+        </h6>
         <h6 class="mt-4"><i class="bi bi-person-fill"></i> {{ $lowongan->tipe_lowongan }}</h6>
 
         <div class="mt-4">
@@ -37,37 +57,49 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="modal-lamar">Modal title</h1>
+                            <h1 class="modal-title fs-5" id="modal-lamar">Unggah Dokumen</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <form action="/lowongan-kerja/{{ $lowongan->slug }}" method="post" enctype="multipart/form-data">
+                        <form action="/lowongan-kerja/{{ $lowongan->slug }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
                                 @foreach ($users as $user)
-                                   
                                     <div class=" mb-3" hidden>
-                                        <input type="text" class="form-control mb-4" name="id_pelamar" id="id_pelamar"
-                                            value="{{ $user->id_pelamar }}">
+                                        <input type="text" class="form-control mb-4" name="id_pelamar"
+                                            id="id_pelamar" value="{{ $user->id_pelamar }}">
                                     </div>
                                     <div class="mb-4">
+                                        <label for="inputGroupFile01">Surat lamaran, Resume/CV, dan Kartu
+                                            Identitas</label>
+                                        <input type="file"
+                                            class="form-control mt-1 @error('dokumen.*') is-invalid @enderror"
+                                            id="inputGroupFile01" name="dokumen[]" multiple>
+                                        @error('dokumen.*')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    {{-- <div class="mb-4">
                                         <label for="inputGroupFile01">Surat Lamaran</label>
                                         <input type="file" class="form-control" id="inputGroupFile01"
                                             name="surat_lamaran">
                                     </div>
                                     <div class="mb-4">
                                         <label for="inputGroupFile02">CV</label>
-                                        <input type="file" class="form-control" id="inputGroupFile02" name="CV">
+                                        <input type="file" class="form-control" id="inputGroupFile02" name="cv">
                                     </div>
                                     <div class="mb-4">
                                         <label for="inputGroupFile03">KTP (Kartu Identitas)</label>
                                         <input type="file" class="form-control" id="inputGroupFile03" name="ktp">
-                                    </div>
-                                    <div class="mb-4">
+                                    </div> --}}
+                                    {{-- <div class="mb-4">
                                         <label for="inputGroupFile04">Dokumen Lain</label>
                                         <input type="file" class="form-control" id="inputGroupFile04"
                                             name="dokumen_lain">
-                                    </div>
+                                    </div> --}}
                                 @endforeach
 
                             </div>

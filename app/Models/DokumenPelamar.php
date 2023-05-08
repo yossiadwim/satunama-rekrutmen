@@ -14,7 +14,7 @@ class DokumenPelamar extends Model
     public $timestamps = false;
     
     public function dokumenPelamarLowongan(){
-        return $this->hasMany(DokumenPelamarLowongan::class);
+        return $this->hasMany(DokumenPelamarLowongan::class,'id_dokumen','id');
     }
 
 

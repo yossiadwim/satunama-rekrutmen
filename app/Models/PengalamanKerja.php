@@ -15,6 +15,6 @@ class PengalamanKerja extends Model
 
 
     public function pelamar(){
-        return $this->belongsTo(Pelamar::class);
+        return $this->belongsTo(Pelamar::class,'id_pelamar','id');
     }
 }

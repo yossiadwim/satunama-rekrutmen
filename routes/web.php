@@ -42,4 +42,5 @@ Route::resource('/pendidikan', PendidikanController::class);
 Route::get('/admin-dashboard/lowongan/createSlug',[AdminDashboardController::class, 'checkSlug']);
 Route::post('/admin-dashboard/lowongan/{lowongan:slug}/closeJobs', [AdminDashboardController::class, 'closeJobs']);
 Route::get('/admin-dashboard/lowongan/{lowongan:slug}/kelola-kandidat', [AdminDashboardController::class, 'show']);
+Route::post('/admin-dashboard/lowongan/{lowongan:slug}/changePosition', [AdminDashboardController::class, 'changePosition']);
 Route::resource('/admin-dashboard/lowongan', AdminDashboardController::class);

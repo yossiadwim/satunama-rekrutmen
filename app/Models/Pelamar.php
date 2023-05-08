@@ -19,11 +19,15 @@ class Pelamar extends Model
     }
 
     public function pengalamanKerja(){
-        return $this->hasMany(PengalamanKerja::class);
+        return $this->hasMany(PengalamanKerja::class,'id_pelamar','id');
     }
 
     
     public function pendidikan(){
-        return $this->hasMany(Pendidikan::class);
+        return $this->hasMany(Pendidikan::class,'id_pelamar','id');
+    }
+
+    public function pelamarLowongan(){
+        return $this->hasMany(PelamarLowongan::class,'id_pelamar','id');
     }
 }

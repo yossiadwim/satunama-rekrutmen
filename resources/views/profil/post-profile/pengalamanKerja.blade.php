@@ -106,7 +106,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" ID="close"
                                 aria-label="Close" onclick="hapusData()"></button>
                         </div>
-                        <form method="post" action="/pengalaman-kerja-kandidat/users" id="formPengalamanKerja">
+                        <form method="post" action="/pengalamanKerja" id="formPengalamanKerja">
                             @csrf
                             <div class="modal-body">
                                 <p>Tambahkan pengalaman kerja yang Anda miliki</p>

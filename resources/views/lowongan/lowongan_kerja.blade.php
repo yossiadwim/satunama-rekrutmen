@@ -67,7 +67,8 @@
                     @foreach ($lowonganOpen->take(3) as $job)
                         <div class="col-md-4 mb-5">
                             <div class="card bg-card shadow-sm border">
-                                <a href="/lowongan-kerja/{{ $job->slug }}/detail" class="text-decoration-none text-dark">
+                                <a href="/lowongan-kerja/{{ $job->slug }}/detail"
+                                    class="text-decoration-none text-dark">
                                     <div class="card-body">
                                         <p class="card-text fw-bold fs-5" style="color: #379237"><i
                                                 class="bi bi-briefcase-fill"></i>
@@ -98,7 +99,8 @@
                     @foreach ($lowonganClosed as $job)
                         <div class="col-md-4 mb-5">
                             <div class="card bg-card shadow-sm border">
-                                <a href="/lowongan-kerja/{{ $job->slug }}/detail" class="text-decoration-none text-dark">
+                                <a href="/lowongan-kerja/{{ $job->slug }}/detail"
+                                    class="text-decoration-none text-dark">
                                     <div class="card-body">
                                         <p class="card-text fw-bold fs-5" style="color: #379237"><i
                                                 class="bi bi-briefcase-fill"></i>
